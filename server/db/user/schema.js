@@ -10,6 +10,8 @@ export default {
 	},
 	salt : String,
 	email : String,
-	displayName : String
+	displayName : String,
+	timeCreate : Date,
+	timeUpdate: Date
 }
 

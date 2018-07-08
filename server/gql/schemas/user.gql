@@ -1,5 +1,16 @@
-{
-	query {
-		hi : String
-	}
+type Query {
+	user(id: String!): User
+}
+
+type Mutation {
+	setUser(login:String!): User
+}
+
+type User {
+	id: String!
+	login: String!
+	email: String
+	displayName: String
+	timeCreate: Date
+	timeUpdate: Date
 }
