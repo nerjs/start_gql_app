@@ -5,6 +5,7 @@ import cookieParser from 'cookie-parser'
 import bodyParser from 'body-parser';
 
 
+import authMdw from 'auth'
 
 const app = express()
 
@@ -28,6 +29,6 @@ app.use(cookieParser());
 
 app.use(express.static(path.join(__dirname, 'root')));
 
-
+app.use(authMdw)
 
 export default app

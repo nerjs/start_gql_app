@@ -5,11 +5,14 @@ import path from 'path';
 import { fileLoader, mergeTypes, mergeResolvers } from 'merge-graphql-schemas';
 
 
+import db from '../db'
 import Logger from 'log'
 
-import user from './schemas/user.gql'
+
 
 const log = Logger('gql:index')
+
+// log(JSON.stringify(new ResErr('user',NOT_FOUND,[{a:'qq',b:'aa'}])))
 
 // log.debug(user)
 
@@ -25,7 +28,7 @@ const typeDefs = mergeTypes(fileLoader(path.join(__dirname, './schemas')))
 
 const resolvers = mergeResolvers(fileLoader(path.join(__dirname, './resolvers')))
 
-log(typeDefs)
+// log(typeDefs)
 
 const schema = makeExecutableSchema({
   typeDefs,
@@ -33,7 +36,13 @@ const schema = makeExecutableSchema({
 }); 
 export default app => {
 
-	app.use(`/${GRAPHQL_ENDPOINT}`, graphqlExpress({ schema }));
+	app.use(`/${GRAPHQL_ENDPOINT}`, graphqlExpress(({ user }) => ({ 
+			schema, 
+			context: {
+				db,
+				user
+			}
+		})));
 
 	app.use(`/${GRAPHIQL_ENDPOINT}`, graphiqlExpress({ endpointURL: `/${GRAPHQL_ENDPOINT}` }));
 

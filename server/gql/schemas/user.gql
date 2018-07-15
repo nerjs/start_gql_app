@@ -1,16 +1,40 @@
 type Query {
-	user(id: String!): User
+	user(id:String, login:String): User 
+	users: [User!]!
+	userAvatars(id:String!): [Avatar!]!
 }
 
 type Mutation {
-	setUser(login:String!): User
+	createUser(login:String!, password:String!): UserResolver!
+	authUser(login: String!, password: String!): UserResolver! 
+	updateUser(id:String!, login:String, email:String, sex:Int, displayName:String): UserResolver!
+	updateUserPassword(id:String!, oldPassword:String!, newPassword:String!): UserResolver!
 }
+
+
+type UserResolver {
+	status: Boolean!
+	user: User
+	error: ResolverError
+}
+
+
 
 type User {
 	id: String!
 	login: String!
 	email: String
-	displayName: String
-	timeCreate: Date
-	timeUpdate: Date
+	displayName: String,
+	sex: Int!
+	createdAt: Date
+	updatedAt: Date
+	avatar: Avatar
+	allAvatars: [Avatar!]!
+}
+
+type Avatar {
+	uri: String!
+	width: Int!
+	height: Int!
+	active: Boolean
 }

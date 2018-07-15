@@ -19,7 +19,6 @@ routes(app)
 
 
 
-
 app.use((err, req, res, next) => {
  	// set locals, only providing error in development
 	res.locals.message = err.message;
@@ -29,7 +28,7 @@ app.use((err, req, res, next) => {
 	res.status(err.status || 500);
 	res.render('error');
 
-	// hhh
+	// hhhr
 })
 
 app.listen(Number(SERVER_PORT), err => {
