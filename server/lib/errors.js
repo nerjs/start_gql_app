@@ -7,6 +7,10 @@ const {
 } = process.env
 
 
+//////////////////
+// ОБЩИЕ ОШИБКИ //
+//////////////////
+
 export const CUSTOM_ERROR = {
 	code: 0,
 	message: 'custom error'
@@ -53,7 +57,9 @@ export const WRONG_PASSWORD = {
 }
 
 
-
+//////////////////////////
+// ВАЛИДАЦИОННЫЕ ОШИБКИ //
+//////////////////////////
 
 export const LOGIN_VALIDATE_LENGTH = {
 	code: 101,
@@ -74,6 +80,23 @@ export const PASSWORD_VALIDATE_CHARS = {
 	code: 104,
 	message: 'The password must contain only letters [a-zA-Z], numbers [0-9] and symbols _-*<>'
 }
+
+////////////////////
+// ПРЕДУПРЕЖДЕНИЯ //
+////////////////////
+
+export const USER_IS_AUTH = {
+	code: 201,
+	message: 'the user is already authorized'
+}
+
+export const NOT_AUTHORIZED = {
+	code: 202,
+	message: 'the user is not authorized'
+}
+
+
+
 
 
 

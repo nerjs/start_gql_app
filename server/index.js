@@ -14,7 +14,6 @@ const { SERVER_HOST, SERVER_PORT } = process.env
 
 
 gql(app)
-
 routes(app)
 
 

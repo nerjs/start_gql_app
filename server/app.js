@@ -30,5 +30,4 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'root')));
 
 app.use(authMdw)
-
 export default app

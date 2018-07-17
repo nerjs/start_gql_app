@@ -5,7 +5,8 @@ import ResErr, {
 	UNKNOWN_ERROR,
 	TYPES_ERROR,
 	LOGIN_BUSY,
-	NOT_FOUND
+	NOT_FOUND,
+	USER_IS_AUTH
 } from 'errors'
 
 const {
@@ -13,7 +14,7 @@ const {
 	SERVER_PORT
 } = process.env
 
-const log = Logger('gql:user')
+const log = Logger('gql:user',{depth:2,showHidden:true})
 
 export default {
 	Query: {
@@ -29,9 +30,8 @@ export default {
 			} catch (e) {}
 			return user
 		},
-		users: async (parent, args, { db, user }) => {
+		users: async (parent, args, { db }) => {
 			let list = [];
-			log(user)
 			try {
 				list = await db.User.getList(args);
 			} catch (e) {}
@@ -44,7 +44,7 @@ export default {
 		}
 	},
 	Mutation: {
-		createUser: async (parent, { login, password }, { db }) => {
+		createUser: async (parent, { login, password }, { db, sess }) => {
 			let user;
 
 			user = await db.User.findOne( { login } )
@@ -57,10 +57,7 @@ export default {
 			try {
 				user = new db.User({
 					login,
-					password,
-					email: `${Math.random()}`,
-					timeCreate: new Date(),
-					timeUpdate: new Date()
+					password
 				})
 
 				await user.save()
@@ -71,15 +68,23 @@ export default {
 					error: new ResErr('user',DB_ERROR)
 				}
 			}
-
+			
+			await sess.addTokens(user.id, user.hashPassword)
 			return {
 				status: true,
 				user
 			}
 		},
-		authUser: async (parent, { login, password }, { db }) => {
+		loginUser: async (parent, { login, password }, { db, sess }) => {
+
 			try {
 				const user = await db.User.authUser(login, password);
+				if (!user) return {
+					status: false,
+					error: new ResErr('auth', NOT_FOUND)
+				}
+
+				await sess.addTokens(user.id, user.hashPassword)
 				return {
 					status: true,
 					user
@@ -90,6 +95,10 @@ export default {
 					error
 				}
 			}
+		},
+		logoutUser: async (parent, args, { sess }) => {
+			sess.dropTokens();
+			return { status: true }
 		},
 		updateUser: async (parent, { id, ...args }, { db }) => {
 			try {

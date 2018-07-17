@@ -1,11 +1,13 @@
 
 import { graphqlExpress, graphiqlExpress } from 'apollo-server-express';
 import { makeExecutableSchema } from 'graphql-tools';
+import { applyMiddleware } from 'graphql-middleware'
 import path from 'path';
 import { fileLoader, mergeTypes, mergeResolvers } from 'merge-graphql-schemas';
 
 
 import db from '../db'
+import mdw from './middleware'
 import Logger from 'log'
 
 
@@ -30,17 +32,23 @@ const resolvers = mergeResolvers(fileLoader(path.join(__dirname, './resolvers'))
 
 // log(typeDefs)
 
-const schema = makeExecutableSchema({
+const schemaBefore = makeExecutableSchema({
   typeDefs,
   resolvers,
 }); 
+
+const schema = applyMiddleware(
+	schemaBefore,
+	mdw
+)
+
 export default app => {
 
-	app.use(`/${GRAPHQL_ENDPOINT}`, graphqlExpress(({ user }) => ({ 
+	app.use(`/${GRAPHQL_ENDPOINT}`, graphqlExpress(({ sess }) => ({ 
 			schema, 
 			context: {
 				db,
-				user
+				sess
 			}
 		})));
 

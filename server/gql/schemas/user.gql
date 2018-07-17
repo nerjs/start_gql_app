@@ -6,7 +6,8 @@ type Query {
 
 type Mutation {
 	createUser(login:String!, password:String!): UserResolver!
-	authUser(login: String!, password: String!): UserResolver! 
+	loginUser(login: String!, password: String!): UserResolver! 
+	logoutUser: UserResolver! 
 	updateUser(id:String!, login:String, email:String, sex:Int, displayName:String): UserResolver!
 	updateUserPassword(id:String!, oldPassword:String!, newPassword:String!): UserResolver!
 }
