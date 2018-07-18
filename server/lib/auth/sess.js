@@ -135,8 +135,11 @@ class SessAuth {
 			try {
 				cookieArg = jwt.verify(this.req.cookies[COOKIE_TOKEN_NAME], JWT_TOKEN_SECRET)
 				userId = cookieArg.id
-			} catch(e){}
+			} catch(e){
+				if (NODE_ENV == 'development') log.error(e)
+			}
 		}
+
 
 		if (!userId && this.req.cookies[COOKIE_TOKEN_REFRESH_NAME]) {
 			try {
@@ -147,15 +150,15 @@ class SessAuth {
 						cookieArg = jwt.verify(this.req.cookies[COOKIE_TOKEN_REFRESH_NAME], `${dbArg.hashPassword}_${JWT_REFRESH_TOKEN_SECRET}`);
 						if (cookieArg.id && cookieArg.id === dbArg.id) {
 							userId = dbArg.id
-							const { token, refreshToken } = this.createTokens({ id: abArg.id }, `${dbArg.hashPassword}_${JWT_REFRESH_TOKEN_SECRET}`)
-							this.setToken(token, refreshToken)
+							const { token, refreshToken } = this.createTokens({ id: dbArg.id }, `${dbArg.hashPassword}_${JWT_REFRESH_TOKEN_SECRET}`)
+							this.setTokens(token, refreshToken)
 						}
 					}
 				}
-			} catch(e) {}
+			} catch(e) {
+				if (NODE_ENV == 'development') log.error(e)
+			}
 		}
-
-
 
 
 		this.id = userId || null;
@@ -172,17 +175,12 @@ class SessAuth {
 			const refreshToken = jwt.sign({...args}, rts, { expiresIn: REFRESH_TOKEN_EXP/1000 })
 			return { token, refreshToken }
 		} catch(e) {
+			if (NODE_ENV == 'development') log.error(e)
 			return {}
 		}
 	}
 
 
-
-	setEndEvent() {
-		this.res.on('end',()=>{
-			console.dir(this.res,{colors:true,depth:2})
-		})
-	}
 }
 
 

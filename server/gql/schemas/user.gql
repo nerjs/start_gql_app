@@ -1,4 +1,5 @@
 type Query {
+	userPing: UserResolver!
 	user(id:String, login:String): User 
 	users: [User!]!
 	userAvatars(id:String!): [Avatar!]!

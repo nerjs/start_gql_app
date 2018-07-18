@@ -8,7 +8,7 @@ const {
 } = process.env 
 
 mongoose.connect(DB_NAME, {
-	// useNewUrlParser : true
+	useNewUrlParser : true
 }).then( db => {
 	log.info('DB CONNECT')
 }).catch( err => {

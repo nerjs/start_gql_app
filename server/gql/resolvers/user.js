@@ -18,6 +18,26 @@ const log = Logger('gql:user',{depth:2,showHidden:true})
 
 export default {
 	Query: {
+		userPing: async (parent, arg, { db, sess }) => {
+			let user;
+			try {
+				user = await db.User.getById(sess.id)
+			} catch(e) {
+				return {
+					status: true,
+					error: new ResErr('ping',UNKNOWN_ERROR)
+				}
+			}
+			if (!user) return {
+				status: false,
+				error: new ResErr('ping',NOT_FOUND)
+			}
+
+			return {
+				status: true,
+				user
+			}
+		},
 		user: async (parent, { id, login }, { db }) => {
 			let user;
 
