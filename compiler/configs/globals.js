@@ -5,7 +5,7 @@ const settings = require('../settings')
 const gf = require('./g_f')
 
 const filePath = gf(settings)
-
+const uglify = require('../uglify')
 
 
 
@@ -21,13 +21,7 @@ const conf = {
 	module : {}
 }
 
-
-//-- DEVTOOL -------------------
-
-//--  LOADERS ------------------------------
-
-
-//--  PLUGINS  ----------------------------  
+ 
 
 conf.plugins = [
   new webpack.NoEmitOnErrorsPlugin(),
@@ -36,7 +30,9 @@ conf.plugins = [
   })
 ]
 
-
+if (process.env.NODE_ENV === 'production') {
+	conf.plugins.push(uglify)
+}
 
 
 

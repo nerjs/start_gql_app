@@ -1,35 +1,59 @@
-const Static = require('node-static');
+const express = require('express')
 const path = require('path')
 const opn = require('opn');
 require('dotenv').config()
-//
-// Create a node-static server instance to serve the './public' folder
-//
-var file = new Static.Server(path.join(__dirname,'files'));
+const webpack = require('webpack')
+const webpackHotMiddleware = require('webpack-hot-middleware');
+const webpackDevMiddleware = require('webpack-dev-middleware');
+// const webpackHotServerMiddleware = require('webpack-hot-server-middleware');
+require('colors')
 
-const send500 = res => {
-	res.statusCode = 500;
-	res.end('Server Error')
+
+
+const app = express()
+
+
+// webpack/react hot loader
+// 
+app.use((req, res, next) => {
+	console.log(req.url.yellow)
+	next()
+})
+
+
+if (process.env.WEBPACK_CONFIG_TYPE == 'hot') {
+const wConf = require('../compiler/configs/hot')
+const compiler = webpack(wConf)
+
+
+
+app.use(webpackDevMiddleware(compiler, {
+	  publicPath: wConf.output.publicPath,
+	  noInfo: true,
+	  stats: {
+	    colors: true,
+	  },
+	}));
+app.use(webpackHotMiddleware(compiler));
+
 }
 
-require('http').createServer(function (request, response) {
-	console.log(request.url)
-    request.addListener('end', function () {
-        //
-        // Serve files!
-        //
-        file.serve(request, response).on('error',err => {
-        	if (err.status == 404) {
-        		file.serveFile('/index.html', 200, {}, request, response);
-        		// })
-        	} else {
-        		send500(response)
-        	}
-        });
-    }).resume();
 
-}).listen(process.env.CLIENT_PORT, process.env.CLIENT_HOST, err => {
+
+app.use(express.static(path.join(__dirname, 'files')));
+
+
+app.use((req, res) => {
+	res.sendFile(path.join(__dirname,'./files/index.html'))
+})
+
+app.use((err, req, res, next) => {
+	console.error(err);
+	res.end('Error')
+})
+
+app.listen(process.env.CLIENT_PORT, process.env.CLIENT_HOST, err => {
 	if (err) return console.error(err);
-	console.log('File-server Start!, ' + 'http://' + process.env.CLIENT_HOST + ':' + process.env.CLIENT_PORT)
-    opn('http://' + process.env.CLIENT_HOST + ':' + process.env.CLIENT_PORT);
-});
+	console.log('File-server Start!'.yellow + ', ' + ('http://' + process.env.CLIENT_HOST + ':' + process.env.CLIENT_PORT).green)
+    // opn('http://' + process.env.CLIENT_HOST + ':' + process.env.CLIENT_PORT);
+})

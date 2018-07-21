@@ -1,9 +1,9 @@
-module.exports = ({options}) => ({
+module.exports = {
 	plugins : {
 		'postcss-import' : {},
 		'postcss-apply' : {},
 		'postcss-cssnext' : {
-			browsers : [options.cssnextBrowsers],
+			browsers : ['last 5 versions'],
 			features : {
 				customMedia : {
 					extensions : {
@@ -29,10 +29,6 @@ module.exports = ({options}) => ({
 				return (last - first);
 			}
 		},
-		'postcss-discard-duplicates' : {},
-		'cssnano' : {
-			preset : 'default',
-			autoprefixer : false
-		}
+		'postcss-discard-duplicates' : {}
 	}
-})
+}

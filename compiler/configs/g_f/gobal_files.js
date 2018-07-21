@@ -1,3 +1,2 @@
-console.log(process.env.NODE_ENV) 
-exports['test'] = 'test';
-exports['redux'] = require('redux');
+exports['react'] = require('react');
+exports['react-dom'] = require('react-dom');

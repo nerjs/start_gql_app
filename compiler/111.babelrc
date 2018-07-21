@@ -1,8 +1,0 @@
-{
-	"presets" : [["env",{
-		"targets" : {
-			"browsers" : "last 1 version" 
-		}
-	}],"react"],
-	"plugins" : ["transform-runtime","react-hot-loader/babel"]
-}

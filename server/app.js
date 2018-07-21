@@ -22,10 +22,6 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 
-// webpack/react hot loader
-// if (config.hot) {
-// 	require('./compiler/hot_uses')(app)
-// }
 
 app.use(express.static(path.join(__dirname, 'root')));
 
