@@ -54,5 +54,5 @@ app.use((err, req, res, next) => {
 app.listen(process.env.CLIENT_PORT, process.env.CLIENT_HOST, err => {
 	if (err) return console.error(err);
 	console.log('File-server Start!'.yellow + ', ' + ('http://' + process.env.CLIENT_HOST + ':' + process.env.CLIENT_PORT).green)
-    opn('http://' + process.env.CLIENT_HOST + ':' + process.env.CLIENT_PORT);
+    // opn('http://' + process.env.CLIENT_HOST + ':' + process.env.CLIENT_PORT);
 })
