@@ -49,7 +49,7 @@ conf.module.rules = [{
 	    			browsers : 'last 3 versions'
 	    		}
 	    	}],'react'],
-	    	plugins : [["transform-object-rest-spread", { "useBuiltIns": true }],'transform-runtime']
+	    	plugins : [["transform-object-rest-spread", { "useBuiltIns": true }],'transform-runtime','react-hot-loader/babel']
 	    }
 	  }
 	]
