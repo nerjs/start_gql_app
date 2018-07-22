@@ -5,3 +5,5 @@ dist
 es
 coverage
 .npmignore
+file_server/files/js 
+file_server/files/css
