@@ -47,8 +47,7 @@
     "opn": "^5.3.0",
     "react-hot-loader": "^4.3.3",
     "webpack-dev-middleware": "^2.0.6",
-    "webpack-hot-middleware": "^2.22.3",
-    "webpack-hot-server-middleware": "^0.5.0"
+    "webpack-hot-middleware": "^2.22.3"
   },
   "dependencies": {
     "apollo-server-express": "^1.4.0",
