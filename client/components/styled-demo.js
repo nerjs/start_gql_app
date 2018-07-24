@@ -23,7 +23,13 @@ import {
 	Label
 } from 'styled/forms'
 
+import {
+	Flex,
+	Row,
+	Col
+} from 'styled/grid'
 
+import { ThemeProvider } from 'styled/settings'
 
 
 
@@ -207,5 +213,26 @@ export default () => (
 				<Option>5 option</Option>
 			</Select>
 		</Form>
+		<Hr />
+		<Flex> Flex </Flex>
+		<Flex inline> Flex inline</Flex>
+		<Flex column> Flex column</Flex>
+		<Hr />
+		<Row>
+			<Col xs={50} sm={25} md={20} lg={15} xl={10} pix={{md:200}}>col1</Col>
+			<Col xs={50} sm={25} md={100} lg={15} xl={10}>col2</Col>
+			<Col xs={50} sm={25} md={20} lg={15} xl={10} visible={{
+				sm: false,
+				md: false,
+				xl: true
+			}}>col3</Col>
+			<Col xs={50} sm={25} md={20} lg={15} xl={10}>col4</Col>
+			<Col xs={50} sm={25} md={20} lg={15} xl={10}>col5</Col>
+			<Col xs={50} sm={25} md={20} lg={15} xl={10}>col6</Col>
+			<Col xs={50} sm={25} md={20} lg={15} xl={10}>col7</Col>
+			<Col xs={50} sm={25} md={20} lg={15} xl={10}>col8</Col>
+			<Col xs={50} sm={25} md={20} lg={15} xl={10}>col9</Col>
+			<Col xs={50} sm={25} md={20} lg={15} xl={10}>col10</Col>
+		</Row>
 	</React.Fragment>
 )
