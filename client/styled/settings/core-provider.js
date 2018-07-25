@@ -3,17 +3,37 @@ import { ThemeProvider } from 'styled-components'
 
 import breakpoints from './breakpoints'
 
-const theme = {
+const themeSchema = {
 	bla : 1,
 	breakpoints
 }
 
-const CoreThemeProvider = (props) => {
-	return (
-		<ThemeProvider theme={props.theme || theme}>
-			{props.children}
-		</ThemeProvider>
-	)
+class CoreThemeProvider extends React.Component {
+	constructor(props) {
+		super(props)
+		this.state = {
+			width: document.body.clientWidth
+		}
+	}
+	
+	componentDidMount() {
+		window.addEventListener('resize',(e) => {
+		  this.setState({
+		  	width: document.body.clientWidth
+		  })
+		});
+	}
+	render() {
+		const theme = {
+			...themeSchema,
+			width: this.state.width
+		}
+		return (
+			<ThemeProvider theme={theme}>
+				{this.props.children}
+			</ThemeProvider>
+		)
+	}
 }
 
 

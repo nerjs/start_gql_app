@@ -26,7 +26,8 @@ import {
 import {
 	Flex,
 	Row,
-	Col
+	Col,
+	Test
 } from 'styled/grid'
 
 import { ThemeProvider } from 'styled/settings'
@@ -35,6 +36,7 @@ import { ThemeProvider } from 'styled/settings'
 
 export default () => (
 	<React.Fragment>
+		<Test> Test </Test>
 		<Header>Header</Header>
 		<Hr />
 		<H1> Header h1 </H1>
@@ -233,6 +235,27 @@ export default () => (
 			<Col xs={50} sm={25} md={20} lg={15} xl={10}>col8</Col>
 			<Col xs={50} sm={25} md={20} lg={15} xl={10}>col9</Col>
 			<Col xs={50} sm={25} md={20} lg={15} xl={10}>col10</Col>
+		</Row>
+		<Hr />
+		<Row noWrap>
+			<Col flex 
+				visible={{
+					xs: false,
+					md: true
+				}} pix={{
+					md: 350
+				}} >test 1</Col>
+			<Col pix={{
+				xs: 200,
+			}} sm={100}>test 2</Col>
+			<Col xs={100} 
+				pix={{
+					sm: 250,
+					md: 100
+				}} 
+				visible={{
+					lg: false
+				}}>test 3</Col>
 		</Row>
 	</React.Fragment>
 )

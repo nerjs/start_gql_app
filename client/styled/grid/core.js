@@ -19,10 +19,17 @@ export const Row = styled(clearDiv)`
 	width: 100%;
 	max-width: 100%;
 	min-width: 100%;
-	flex-wrap: wrap;
+	flex-wrap: ${props => props.noWrap ? 'nowrap': 'wrap'};
 `
 
 
 export const Col = styled(clearDiv)`
 	${parseMedia}
+	outline: 1px solid orange;
+`
+
+export const Test = styled.div`
+	background: rgba(100,100,${(props)=>{
+		return parseInt(props.theme.width / 5)
+	}},.9);
 `

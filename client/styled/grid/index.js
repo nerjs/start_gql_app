@@ -1,5 +1,6 @@
 export {
 	Flex,
 	Row,
-	Col
+	Col,
+	Test
 } from './core'
