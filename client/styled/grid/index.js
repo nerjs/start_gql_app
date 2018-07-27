@@ -3,4 +3,4 @@ export {
 	Row,
 	Col,
 	Test
-} from './core'
+} from './grid_core'

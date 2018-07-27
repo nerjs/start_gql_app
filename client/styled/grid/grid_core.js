@@ -25,7 +25,6 @@ export const Row = styled(clearDiv)`
 
 export const Col = styled(clearDiv)`
 	${parseMedia}
-	outline: 1px solid orange;
 `
 
 export const Test = styled.div`

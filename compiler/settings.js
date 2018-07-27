@@ -11,6 +11,8 @@ exports.globals = [
 	'redux', 
 	'react-redux', 
 	'create-redux-store', 
-	'styled-components'
+	'styled-components',
+	'react-router',
+	'react-router-dom'
 ]
 

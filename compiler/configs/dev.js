@@ -12,7 +12,7 @@ const settings = require('../settings')
 const conf = {
 	context : settings.from,
 	entry : {
-		main : ['fetch-polyfill', path.join(settings.from,'index.js')]
+		main : './index.js'
 	} ,
 	output : {
 		filename : './js/[name].js',
@@ -40,7 +40,13 @@ conf.module.rules = [{
 	    			browsers : 'last 3 versions'
 	    		}
 	    	}],'react'],
-	    	plugins : [["transform-object-rest-spread", { "useBuiltIns": true }],'transform-runtime']
+	    	plugins : [
+	    		["transform-object-rest-spread", { "useBuiltIns": true }],
+	    		'transform-runtime',
+	    		['babel-plugin-styled-components',{
+	    			displayName: true,
+	    			fileName: true
+	    		}]]
 	    }
 	  }
 	]

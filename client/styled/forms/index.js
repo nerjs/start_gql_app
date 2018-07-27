@@ -5,4 +5,4 @@ export {
 	TextArea,
 	Select,
 	Option
-} from './core'
+} from './forms_core'

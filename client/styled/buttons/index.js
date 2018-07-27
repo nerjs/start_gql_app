@@ -1,3 +1,3 @@
 export {
 	Button
-} from './core'
+} from './buttons_core'

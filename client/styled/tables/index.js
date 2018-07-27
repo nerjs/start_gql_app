@@ -7,4 +7,4 @@ export {
 	Tr,
 	Td,
 	Th
-} from './core'
+} from './tables_core'
