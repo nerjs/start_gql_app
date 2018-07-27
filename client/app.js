@@ -1,11 +1,14 @@
 import React from 'react'
+import { BrowserRouter } from 'react-router-dom'
 
 import { ThemeProvider } from 'styled/settings'
 
-import Demo from 'comp/styled-demo'
+import Pages from './pages'
 
 export default () => (
-	<ThemeProvider>
-		<Demo />
-	</ThemeProvider>
+	<BrowserRouter>
+		<ThemeProvider>
+			<Pages />
+		</ThemeProvider>
+	</BrowserRouter>
 )

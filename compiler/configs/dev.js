@@ -46,7 +46,8 @@ conf.module.rules = [{
 	    		['babel-plugin-styled-components',{
 	    			displayName: true,
 	    			fileName: true
-	    		}]]
+	    		}]
+	    	]
 	    }
 	  }
 	]

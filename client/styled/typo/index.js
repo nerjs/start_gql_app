@@ -1,12 +1,15 @@
 export { 
-	Header
+	Header,
+	SimpleHeader
 } from './headers'
 
 
 export { 
 	Div, 
 	Section,
-	Article
+	Article,
+	LayoutBlock,
+	LayoutSimpleBlock
 } from './blocks'
 
 export { 

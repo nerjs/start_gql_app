@@ -21,9 +21,9 @@ const pm = (name, props) => {
 		rule.push(ruleV)
 	}
 	if (props.pix && props.pix[name] !== undefined) {
-		ruleW = css`width:${Number(props.pix[name])}px`
+		ruleW = css`width:${Number(props.pix[name])}px;`
 	} else if (props[name]) {
-		ruleW = css`width:${parseNumber(props[name])}%`
+		ruleW = css`width:${parseNumber(props[name])}%;`
 	}
 
 	if (ruleW) rule.push(ruleW)

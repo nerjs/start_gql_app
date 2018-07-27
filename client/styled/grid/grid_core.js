@@ -24,8 +24,9 @@ export const Row = styled(clearDiv)`
 
 
 export const Col = styled(clearDiv)`
-	${parseMedia}
+	${parseMedia};
 `
+	// outline: 1px solid orange;
 
 export const Test = styled.div`
 	background: rgba(100,100,${(props)=>{
