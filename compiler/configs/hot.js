@@ -44,12 +44,14 @@ conf.module.rules = [{
 	  {
 	    loader : 'babel-loader',
 	    options : {
-	    	presets : [['env',{
+	    	presets : [
+	    		['env',{
 	    		targets : {
 	    			browsers : 'last 3 versions'
 	    		}
 	    	}],'react'],
 	    	plugins : [
+	    		'transform-class-properties',
 	    		["transform-object-rest-spread", { "useBuiltIns": true }],
 	    		'transform-runtime',
 	    		['babel-plugin-styled-components',{

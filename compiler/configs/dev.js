@@ -41,6 +41,7 @@ conf.module.rules = [{
 	    		}
 	    	}],'react'],
 	    	plugins : [
+	    		'transform-class-properties',
 	    		["transform-object-rest-spread", { "useBuiltIns": true }],
 	    		'transform-runtime',
 	    		['babel-plugin-styled-components',{

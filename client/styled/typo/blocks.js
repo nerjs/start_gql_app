@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-import { clearDiv } from 'styled/helpers'
+import { clearDiv, schemaWidth } from 'styled/helpers'
 
 export const Div = styled.div`
 	display: block;
@@ -21,5 +21,15 @@ export const LayoutBlock = styled(clearDiv)`
 `
 
 export const LayoutSimpleBlock = styled(clearDiv)`
-	display: block;
+	position: relative;
+	${schemaWidth({
+		xs: '100%',
+		sm: 500
+	})}
+	margin: 5px 0;
+
+	@media (min-width: ${props => props.theme.bp.sm}px) {
+		margin-left: 50%;
+		transform: translate(-50%, 0);
+	}
 `

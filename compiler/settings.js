@@ -8,11 +8,14 @@ exports.globalName = '__GLOBAL__'
 exports.globals = [
 	'react', 
 	'react-dom', 
-	'redux', 
-	'react-redux', 
-	'create-redux-store', 
+	// 'redux', 
+	// 'react-redux', 
+	// 'create-redux-store', 
 	'styled-components',
 	'react-router',
-	'react-router-dom'
+	'react-router-dom',
+	'formik',
+	'yup'
+	// 'react-apollo'
 ]
 

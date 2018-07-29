@@ -25,6 +25,7 @@ export {
 export {
 	Span,
 	Text,
+	HelperText,
 	I,
 	B,
 } from './text' 
@@ -39,3 +40,7 @@ export {
 	Hr, 
 	Hg
 } from './other'
+
+export {
+	SimplePageCard
+} from './cards'

@@ -15,3 +15,9 @@ export const I = styled.i`
 export const B = styled.b`
 	display: inline;
 `
+
+export const HelperText = styled.div`
+	display: ${({children}) => children ? 'block': 'none'};
+	font-size: 0.8em;
+	color: ${({theme:{colors}})=>colors.helperText}
+`

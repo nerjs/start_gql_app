@@ -2,10 +2,13 @@ import React from 'react'
 import { ThemeProvider } from 'styled-components'
 
 import breakpoints from './breakpoints'
+import colors from './colors'
 
 const themeSchema = {
 	bla : 1,
-	breakpoints
+	breakpoints,
+	bp : breakpoints,
+	colors
 }
 
 class CoreThemeProvider extends React.Component {

@@ -12,7 +12,8 @@ import StyledDemo from './other/styled-demo'
 const PagesApp = () => (
 	<Switch>
 		<Route exact path="/" component={Home} />
-		<Route path="/user" component={User} />
+		<Route path="/user/:id" component={User} />
+		<Route path="/~:login" component={User} />
 		<Route path="/auth" component={Auth} />
 		<Route path="/styled/demo" component={StyledDemo} />
 		<Route component={ErrorRoute} />
