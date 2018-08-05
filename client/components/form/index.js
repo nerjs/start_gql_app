@@ -12,3 +12,8 @@ export {
 	TextInput, 
 	PasswordInput
 } from './input'
+
+
+export {
+	OnceButton
+} from './buttons'

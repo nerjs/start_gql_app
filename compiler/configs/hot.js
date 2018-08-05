@@ -1,6 +1,7 @@
 const path = require('path');
 const webpack = require('webpack');
 var ETP = require('extract-text-webpack-plugin');
+const DotEnv = require('dotenv-webpack');
 
 const aliases = require('../aliases')
 const utils = require('../utils')
@@ -95,6 +96,7 @@ conf.plugins = [
   new webpack.DefinePlugin({
     'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV)
   }),
+  new DotEnv(),
   new webpack.HotModuleReplacementPlugin()
 ]
 

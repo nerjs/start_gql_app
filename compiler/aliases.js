@@ -7,4 +7,5 @@ module.exports = {
 	utils : path.join(settings.from, 'utils'),
 	hocs : path.join(settings.from, 'hocs'),
 	vendor : path.join(settings.from, 'vendor'),
+	icons : 'react-icons/lib'
 }

@@ -35,7 +35,7 @@ const InputGroup = props => (
 			required={props.required} 
 			error={!!props.error} >{props.label}</GroupLabel>
 		{getInput(props)}
-		<GroupHelperText error={!!props.error}>{props.helperText || props.error}</GroupHelperText>
+		<GroupHelperText error={!!props.error}>{props.error || props.helperText}</GroupHelperText>
 	</LayerGroup>
 )
 

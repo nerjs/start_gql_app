@@ -3,14 +3,14 @@ import styled, { css } from 'styled-components'
 
 import { Row, Col } from '../grid'
 import { Input, Label } from './forms_core'
-import { HelperText } from '../typo'
+import { HelperText, Span } from '../typo'
 import { Button } from '../buttons'
 
 
 export const LayerGroup = styled.div`
 	width: 100%;
 	position: relative;
-	padding: 2px 4px ${({ noHelper }) => noHelper ? '2px' : '18px'};
+	padding: 2px 4px;
 	margin: 2px 0 5px;
 	overflow: hidden;
 `
@@ -43,9 +43,6 @@ export const GroupInput = styled(Input)`
 `
 
 export const GroupHelperText = styled(HelperText)`
-	position: absolute;
-	bottom: 0;
-	right: 0;
 	left: 10px;
 	${({ theme: {colors}, error })=> error ? css`color:${colors.formError}` : ''}
 `
@@ -54,6 +51,21 @@ export const GroupButtonSubmit = styled(Button)`
 	width: 100%;
 	padding: 8px 10px;
 	font-size: 18px;
+
+	& span {
+		width: 100%;
+		text-align: center;
+		z-index: 1;
+		opacity: 1;
+	}
+
+	&:disabled {
+		cursor: default;
+
+		& span {
+			opacity: 0.3;
+		}
+	}
 
 
 	@media (min-width: ${props => props.theme.bp.sm}px) {

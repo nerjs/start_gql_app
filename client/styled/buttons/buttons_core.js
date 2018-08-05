@@ -2,6 +2,7 @@ import styled from 'styled-components'
 
 
 export const Button = styled.button`
+	position: relative;
 	display: inline-block;
 	background-color: ${({ theme : { colors }}) => colors.buttonPrimaryBg};
 	color: ${({ theme : { colors }}) => colors.buttonPrimary};

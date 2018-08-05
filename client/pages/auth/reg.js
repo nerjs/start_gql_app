@@ -2,14 +2,17 @@ import React from 'react'
 import { withFormik, Field } from 'formik';
 import * as yup from 'yup'
 
+import Loader from 'icons/io/load-d'
+
 import { Form, GroupButtonSubmit } from 'styled/forms'
-import { TextInput, PasswordInput, Group } from 'comp/form'
+import { TextInput, PasswordInput, Group, OnceButton } from 'comp/form'
 
 const AuthReg = ({
 	handleSubmit,
+	isSubmitting,
 	...props
 }) => {
-	// console.log('reg: ',props)
+	console.log('reg: ',props)
 
 	return (
 		<Form onSubmit={handleSubmit} >
@@ -39,7 +42,10 @@ const AuthReg = ({
 				placeholder="Повторить пароль"
 				component={Group}
 			/>
-			<GroupButtonSubmit type="submit">Регистрация</GroupButtonSubmit>
+			<OnceButton 
+				label="Регистрация"
+				disabled={isSubmitting}
+				load={isSubmitting} />
 		</Form>
 	)
 }
@@ -50,8 +56,12 @@ export default withFormik({
 		password: '',
 		repeatPassword: ''
 	}),
-	handleSubmit: (props, { setFieldError}) => {
-		console.log(props)
-		setFieldError('login','login')
+	handleSubmit: (props, { setFieldError, setSubmitting, ...params }) => {
+		console.log('props: ',props)
+		console.log('params: ',params)
+		setSubmitting(true)
+
+		setTimeout(()=>setSubmitting(false),3000)
+		// setFieldError('login','login')
 	}
 })(AuthReg)

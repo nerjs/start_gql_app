@@ -6,6 +6,7 @@ export const clearBox = css`
 	padding: 0;
 	border: none;
 	box-sizing: border-box;
+	outline: none;
 `
 
 export const clearDiv = styled.div`
