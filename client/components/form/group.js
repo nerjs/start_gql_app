@@ -22,9 +22,9 @@ export const TextGroup = ({
 					error={!!error} />
 )
 
-console.log(process.env)
-const getInput = props => {
 
+const getInput = props => {
+	console.log(props)
 
 	return <TextGroup {...props} type="text"/>
 }
@@ -35,7 +35,9 @@ const InputGroup = props => (
 			required={props.required} 
 			error={!!props.error} >{props.label}</GroupLabel>
 		{getInput(props)}
-		<GroupHelperText error={!!props.error}>{props.error || props.helperText}</GroupHelperText>
+		<GroupHelperText error={!!(props.form.errors && props.form.errors[props.field.name])}>
+			{(props.form.errors && props.form.errors[props.field.name]) || props.helperText}
+		</GroupHelperText>
 	</LayerGroup>
 )
 

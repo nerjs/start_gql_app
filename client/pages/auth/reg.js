@@ -10,9 +10,11 @@ import { TextInput, PasswordInput, Group, OnceButton } from 'comp/form'
 const AuthReg = ({
 	handleSubmit,
 	isSubmitting,
+	errors,
 	...props
 }) => {
-	console.log('reg: ',props)
+	// console.log('reg: ',props)
+	console.log('errors: ',errors)
 
 	return (
 		<Form onSubmit={handleSubmit} >
@@ -44,11 +46,27 @@ const AuthReg = ({
 			/>
 			<OnceButton 
 				label="Регистрация"
-				disabled={isSubmitting}
+				disabled={isSubmitting || Object.keys(errors).length > 0}
 				load={isSubmitting} />
 		</Form>
 	)
 }
+
+const validationSchema = yup.object()
+							.shape({
+								login: yup.string()
+										.min(process.env.VALIDATE_LOGIN_MIN,`Длинна логина не должна быть меньше ${process.env.VALIDATE_LOGIN_MIN}`)
+										.max(process.env.VALIDATE_LOGIN_MAX,`Длинна логина не должна быть больше ${process.env.VALIDATE_LOGIN_MAX}`)
+										.matches(/^[\*\<\>a-zA-Z0-9_-]+$/,'Логин должен состоять из символов: [a-zA-Z0-9]-_'),
+								password: yup.string()
+										.min(process.env.VALIDATE_PASSWORD_MIN,`Длинна пароля не должна быть меньше ${process.env.VALIDATE_PASSWORD_MIN}`)
+										.max(process.env.VALIDATE_PASSWORD_MAX,`Длинна пароля не должна быть больше ${process.env.VALIDATE_PASSWORD_MAX}`)
+										.matches(/^[\*\<\>a-zA-Z0-9_-]+$/,'Пароль должен состоять из символов: [a-zA-Z0-9]-_'),
+								repeatPassword: yup.mixed()
+													.test('match','test', function(){
+														console.log(this)
+													})
+							})
 
 export default withFormik({
 	mapPropsToValues: () => ({
@@ -56,12 +74,14 @@ export default withFormik({
 		password: '',
 		repeatPassword: ''
 	}),
+	validationSchema,
 	handleSubmit: (props, { setFieldError, setSubmitting, ...params }) => {
-		console.log('props: ',props)
-		console.log('params: ',params)
+		// console.log('props: ',props)
+		// console.log('params: ',params)
 		setSubmitting(true)
-
+		// setFieldError('login','tratata')
 		setTimeout(()=>setSubmitting(false),3000)
-		// setFieldError('login','login')
 	}
 })(AuthReg)
+
+// console.log(isValidEmail)
