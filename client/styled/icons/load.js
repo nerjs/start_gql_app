@@ -2,11 +2,11 @@ import styled, {css} from 'styled-components'
 import Load from 'icons/io/load-a'
 
 import { spin } from 'styled/animate'
+import { sizeHelper } from './helpers'
 
 
 export const IconLoad = styled(Load)`
-	width: ${({size})=>size || 20}px;
-	height: ${({size})=>size || 20}px;
+	${sizeHelper}
 	z-index: ${({z})=>z || 1};
 	${({spin})=>spin?css`
 		color: red;

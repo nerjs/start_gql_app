@@ -3,8 +3,9 @@ import styled, { css } from 'styled-components'
 
 import { Row, Col } from '../grid'
 import { Input, Label } from './forms_core'
-import { HelperText, Span } from '../typo'
+import { HelperText, Span,  } from '../typo'
 import { Button } from '../buttons'
+import { clearDiv } from '../helpers'
 
 
 export const LayerGroup = styled.div`
@@ -21,13 +22,13 @@ export const GroupLabel = styled(Label)`
 	font-weight: bold;
 	width: 100%;
 	padding: 2px 10px;
-	${({ theme: {colors}, error })=> error ? css`color:${colors.formError}` : ''}
-
 	${({ required }) => !required ? null : css`
 		&:after {
-			content: "*"
+			content: "*";
 		}
 	`}
+
+	${({ theme: {colors}, error })=> error ? css`color:${colors.formError};` : ''}
 `
 
 export const GroupInput = styled(Input)`
@@ -79,4 +80,8 @@ export const GroupButtonSubmit = styled(Button)`
 	@media (min-width: ${props => props.theme.bp.md}px) {
 		padding: 4px 10px;
 	}
+`
+
+export const PasswordWrapper = styled(clearDiv)`
+	position: relative;
 `

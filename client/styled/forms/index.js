@@ -12,5 +12,6 @@ export {
 	GroupInput,
 	GroupLabel,
 	GroupHelperText,
-	GroupButtonSubmit
+	GroupButtonSubmit,
+	PasswordWrapper
 } from './groups'

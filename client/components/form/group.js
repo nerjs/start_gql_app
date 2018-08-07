@@ -12,34 +12,50 @@ import {
 	Row, Col
 } from 'styled/grid'
 
-export const TextGroup = ({
-	field,
-	required,
-	error
-}) => (
-	<GroupInput id={`_${field.name}`} 
-					{...field} 
-					error={!!error} />
-)
+
+import {
+	TextInput,
+	PasswordInput
+} from './input'
 
 
-const getInput = props => {
-	console.log(props)
 
-	return <TextGroup {...props} type="text"/>
+class InputGroup extends React.Component {
+	getInput = () => {
+		const { type } = this.props
+		switch (type) {
+			case 'password': return <PasswordInput {...this.props} error={this.error} />;
+			default: return <TextInput {...this.props} type="text" error={this.error} />
+		}
+	}
+
+	getError = () => {
+		const { touched, errors, values } = this.props.form
+		const { name } = this.props.field
+
+		this.error = touched[name] && errors[name] ? errors[name] : null
+	}
+
+	render() {
+		this.getError()
+		const { helperText, required, label } = this.props;
+		const { name } = this.props.field;
+		const error = this.error
+		return (
+			<LayerGroup>
+				<GroupLabel htmlFor={`_${name}`} 
+					required={!!required} 
+					error={!!error} >{label}</GroupLabel>
+				{this.getInput()}
+				<GroupHelperText error={!!error}>
+					{error || helperText}
+				</GroupHelperText>
+			</LayerGroup>
+		)
+	}
 }
 
-const InputGroup = props => (
-	<LayerGroup>
-		<GroupLabel htmlFor={`_${props.field.name}`} 
-			required={props.required} 
-			error={!!props.error} >{props.label}</GroupLabel>
-		{getInput(props)}
-		<GroupHelperText error={!!(props.form.errors && props.form.errors[props.field.name])}>
-			{(props.form.errors && props.form.errors[props.field.name]) || props.helperText}
-		</GroupHelperText>
-	</LayerGroup>
-)
+
 
 
 export default InputGroup

@@ -3,6 +3,7 @@ import { withFormik, Field } from 'formik';
 import * as yup from 'yup'
 
 import Loader from 'icons/io/load-d'
+import { schemaReg as validationSchema } from 'utils/validate'
 
 import { Form, GroupButtonSubmit } from 'styled/forms'
 import { TextInput, PasswordInput, Group, OnceButton } from 'comp/form'
@@ -14,7 +15,7 @@ const AuthReg = ({
 	...props
 }) => {
 	// console.log('reg: ',props)
-	console.log('errors: ',errors)
+	// console.log('errors: ',errors)
 
 	return (
 		<Form onSubmit={handleSubmit} >
@@ -38,7 +39,7 @@ const AuthReg = ({
 			/>
 			<Field 
 				type="password"
-				name="repeatPassword" 
+				name="confirmPassword" 
 				label="повторить пароль"
 				required 
 				placeholder="Повторить пароль"
@@ -52,27 +53,12 @@ const AuthReg = ({
 	)
 }
 
-const validationSchema = yup.object()
-							.shape({
-								login: yup.string()
-										.min(process.env.VALIDATE_LOGIN_MIN,`Длинна логина не должна быть меньше ${process.env.VALIDATE_LOGIN_MIN}`)
-										.max(process.env.VALIDATE_LOGIN_MAX,`Длинна логина не должна быть больше ${process.env.VALIDATE_LOGIN_MAX}`)
-										.matches(/^[\*\<\>a-zA-Z0-9_-]+$/,'Логин должен состоять из символов: [a-zA-Z0-9]-_'),
-								password: yup.string()
-										.min(process.env.VALIDATE_PASSWORD_MIN,`Длинна пароля не должна быть меньше ${process.env.VALIDATE_PASSWORD_MIN}`)
-										.max(process.env.VALIDATE_PASSWORD_MAX,`Длинна пароля не должна быть больше ${process.env.VALIDATE_PASSWORD_MAX}`)
-										.matches(/^[\*\<\>a-zA-Z0-9_-]+$/,'Пароль должен состоять из символов: [a-zA-Z0-9]-_'),
-								repeatPassword: yup.mixed()
-													.test('match','test', function(){
-														console.log(this)
-													})
-							})
 
 export default withFormik({
 	mapPropsToValues: () => ({
 		login : '',
 		password: '',
-		repeatPassword: ''
+		confirmPassword: ''
 	}),
 	validationSchema,
 	handleSubmit: (props, { setFieldError, setSubmitting, ...params }) => {
