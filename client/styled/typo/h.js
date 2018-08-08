@@ -28,3 +28,8 @@ export const H5 = styled.h5`
 export const H6 = styled.h6`
 	font-size: 12px;
 `
+
+export const SimpleTitle = styled(H3)`
+	text-align: center;
+	padding: 2px 5px 5px;
+`

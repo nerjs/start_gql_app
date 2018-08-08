@@ -7,6 +7,7 @@ import { schemaReg as validationSchema } from 'utils/validate'
 
 import { Form, GroupButtonSubmit } from 'styled/forms'
 import { TextInput, PasswordInput, Group, OnceButton } from 'comp/form'
+import { SimpleTitle } from 'styled/typo'
 
 const AuthReg = ({
 	handleSubmit,
@@ -18,38 +19,41 @@ const AuthReg = ({
 	// console.log('errors: ',errors)
 
 	return (
-		<Form onSubmit={handleSubmit} >
-			<Field 
-				type="text"
-				name="login"
-				label="Логин"
-				placeholder="Введите логин"
-				required 
-				helperText={`Минимально ${process.env.VALIDATE_LOGIN_MIN}, максимально ${process.env.VALIDATE_LOGIN_MAX} символа.`}
-				component={Group}
-			/>
-			<Field 
-				type="password"
-				name="password"
-				label="Пароль"
-				required 
-				helperText={`Минимально ${process.env.VALIDATE_PASSWORD_MIN}, максимально ${process.env.VALIDATE_PASSWORD_MAX} символа.`}
-				placeholder="Введите пороль"
-				component={Group}
-			/>
-			<Field 
-				type="password"
-				name="confirmPassword" 
-				label="повторить пароль"
-				required 
-				placeholder="Повторить пароль"
-				component={Group}
-			/>
-			<OnceButton 
-				label="Регистрация"
-				disabled={isSubmitting || Object.keys(errors).length > 0}
-				load={isSubmitting} />
-		</Form>
+		<React.Fragment>
+			<SimpleTitle>Регистрация</SimpleTitle>
+			<Form onSubmit={handleSubmit} >
+				<Field 
+					type="text"
+					name="login"
+					label="Логин"
+					placeholder="Введите логин"
+					required 
+					helperText={`Минимально ${process.env.VALIDATE_LOGIN_MIN}, максимально ${process.env.VALIDATE_LOGIN_MAX} символа.`}
+					component={Group}
+				/>
+				<Field 
+					type="password"
+					name="password"
+					label="Пароль"
+					required 
+					helperText={`Минимально ${process.env.VALIDATE_PASSWORD_MIN}, максимально ${process.env.VALIDATE_PASSWORD_MAX} символа.`}
+					placeholder="Введите пороль"
+					component={Group}
+				/>
+				<Field 
+					type="password"
+					name="confirmPassword" 
+					label="повторить пароль"
+					required 
+					placeholder="Повторить пароль"
+					component={Group}
+				/>
+				<OnceButton 
+					label="Регистрация"
+					disabled={isSubmitting || Object.keys(errors).length > 0}
+					load={isSubmitting} />
+			</Form>
+		</React.Fragment>
 	)
 }
 
@@ -69,5 +73,3 @@ export default withFormik({
 		setTimeout(()=>setSubmitting(false),3000)
 	}
 })(AuthReg)
-
-// console.log(isValidEmail)

@@ -20,3 +20,8 @@ export const confirmPassword = yup.string()
 
 export const schemaReg = yup.object()
 							.shape({login, password, confirmPassword })
+
+
+
+export const schemaLogin = yup.object()
+							.shape({login, password })
