@@ -4,10 +4,13 @@ import { Link } from 'react-router-dom'
 import { Header } from 'styled/typo'
 import { Row, Col } from 'styled/grid'
 
+import withCu from 'hocs/cu'
+import AuthLinks from './auth_links'
+
+
 class CoreHeader extends React.Component {
 
 	render() {
-
 		return (
 			<Header>
 				<Row>
@@ -15,14 +18,11 @@ class CoreHeader extends React.Component {
 						xs: false,
 						md: true
 					}} md={50} >
-						<Link to="/" > Home </Link>
+						<Link to="/" > Home  </Link>
+						{this.props.login || null}
 					</Col>
 					<Col name="right" xs={100} md={50}>
-						<Link to="/auth/reg"> регистрация </Link>
-						 - 
-						<Link to="/auth/login"> авторизация </Link>
-						 - 
-						<Link to="/auth/logout"> выход </Link>
+						<AuthLinks/>
 					</Col>
 				</Row>
 			</Header>
@@ -30,4 +30,4 @@ class CoreHeader extends React.Component {
 	}
 }
 
-export default CoreHeader
+export default withCu(CoreHeader)

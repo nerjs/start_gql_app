@@ -9,6 +9,8 @@ import { Form, GroupButtonSubmit } from 'styled/forms'
 import { TextInput, PasswordInput, Group, OnceButton } from 'comp/form'
 import { SimpleTitle } from 'styled/typo'
 
+import withCu from 'hocs/cu'
+
 const AuthLogin = ({
 	handleSubmit,
 	isSubmitting,
@@ -50,17 +52,16 @@ const AuthLogin = ({
 }
 
 
-export default withFormik({
+export default withCu(withFormik({
 	mapPropsToValues: () => ({
 		login : '',
 		password: ''
 	}),
 	validationSchema,
-	handleSubmit: (props, { setFieldError, setSubmitting, ...params }) => {
-		// console.log('props: ',props)
-		// console.log('params: ',params)
+	handleSubmit: ({ login }, { props, setFieldError, setSubmitting, ...params }) => {
+		props.createUser({login})
 		setSubmitting(true)
 		// setFieldError('login','tratata')
 		setTimeout(()=>setSubmitting(false),3000)
 	}
-})(AuthLogin)
+})(AuthLogin))

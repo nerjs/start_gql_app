@@ -4,6 +4,9 @@ import { Link } from 'react-router-dom'
 import { SimpleHeader } from 'styled/typo'
 import { Row, Col } from 'styled/grid'
 
+import AuthLinks from './auth_links'
+import withCu from 'hocs/cu'
+
 class SimpleHeaderComponent extends React.Component {
 
 	render() {
@@ -16,13 +19,10 @@ class SimpleHeaderComponent extends React.Component {
 						md: true
 					}} md={50} >
 						<Link to="/" > Home </Link>
+						{this.props.login || null}
 					</Col>
 					<Col name="right" xs={100} md={50}>
-						<Link to="/auth/reg"> регистрация </Link>
-						 - 
-						<Link to="/auth/login"> авторизация </Link>
-						 - 
-						<Link to="/auth/logout"> выход </Link>
+						<AuthLinks/>
 					</Col>
 				</Row>
 			</SimpleHeader>
@@ -30,4 +30,4 @@ class SimpleHeaderComponent extends React.Component {
 	}
 }
 
-export default SimpleHeaderComponent
+export default withCu(SimpleHeaderComponent)
