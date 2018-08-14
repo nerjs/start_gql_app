@@ -9,6 +9,17 @@ import AuthLinks from './auth_links'
 
 
 class CoreHeader extends React.Component {
+	getUser() {
+		const { loading, loaded, isAuth, userData, userId } = this.props;
+		if (loading || !loaded) return 'Loading...';
+		if (!isAuth) return 'Not Authorized';
+		if (userData && userData.displayName) return (
+				<Link to={`/user/${userId}`}>
+					{userData.displayName}
+				</Link>
+			);
+		return null;
+	}
 
 	render() {
 		return (
@@ -19,7 +30,7 @@ class CoreHeader extends React.Component {
 						md: true
 					}} md={50} >
 						<Link to="/" > Home  </Link>
-						{this.props.login || null}
+						{this.getUser()}
 					</Col>
 					<Col name="right" xs={100} md={50}>
 						<AuthLinks/>

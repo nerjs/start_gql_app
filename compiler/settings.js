@@ -15,7 +15,15 @@ exports.globals = [
 	'react-router',
 	'react-router-dom',
 	'formik',
-	'yup'
-	// 'react-apollo'
+	'yup',
+	'react-apollo',
+	'apollo-client',
+	'apollo-cache-inmemory',
+	'apollo-link-http',
+	'apollo-link',
+	'apollo-link-state',
+	'apollo-link-error',
+	'apollo-boost',
+	'graphql-tag'
 ]
 

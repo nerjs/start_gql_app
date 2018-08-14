@@ -4,6 +4,8 @@ import { makeExecutableSchema } from 'graphql-tools';
 import { applyMiddleware } from 'graphql-middleware'
 import path from 'path';
 import { fileLoader, mergeTypes, mergeResolvers } from 'merge-graphql-schemas';
+import cors from 'cors'
+
 
 
 import db from '../db'
@@ -14,6 +16,7 @@ import Logger from 'log'
 
 const log = Logger('gql:index')
 
+// log(cors)
 // log(JSON.stringify(new ResErr('user',NOT_FOUND,[{a:'qq',b:'aa'}])))
 
 // log.debug(user)
@@ -44,7 +47,7 @@ const schema = applyMiddleware(
 
 export default app => {
 
-	app.use(`/${GRAPHQL_ENDPOINT}`, graphqlExpress(({ sess }) => ({ 
+	app.use(`/${GRAPHQL_ENDPOINT}`,cors(), graphqlExpress(({ sess }) => ({ 
 			schema, 
 			context: {
 				db,
