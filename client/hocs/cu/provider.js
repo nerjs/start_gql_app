@@ -1,7 +1,9 @@
 import React from 'react'
 import gql from "graphql-tag";
-import { graphql } from 'react-apollo';
+import { compose, graphql } from 'react-apollo';
 
+import gqlUserPing from './gqls/user_ping.gql'
+import gqlUpdateUser from './gqls/update_user.gql'
 import { UnknownError } from 'utils/error'
 
 // console.log(new UnknownError('userPing'))
@@ -22,6 +24,8 @@ const userPing = gql`{
   }
 }
 `
+
+console.log({ userPing, gqlUserPing, gqlUpdateUser })
 
 import { Provider } from './context'
 
@@ -51,7 +55,6 @@ class CurrentUserProvider extends React.Component {
 		if (!this.state.loaded && !loading) this.setState({ loaded: true });
 		if (!userPing) return;
 		const { status, user, error } = userPing;
-		console.log({ status, user, error })
 		if (status && user) {
 			this.setState({
 				isAuth: true,
@@ -90,7 +93,7 @@ class CurrentUserProvider extends React.Component {
 	}
 
 	render() {
-		console.log('cu render ',this.state)
+		console.log('cu render ',this.state, this.props)
 		return (
 			<Provider value={this.getValue()}>
 				{this.props.children}
@@ -99,4 +102,10 @@ class CurrentUserProvider extends React.Component {
 	}
 }
 
-export default graphql(userPing)(CurrentUserProvider)
+export default compose(
+	graphql(gqlUserPing),
+	graphql(gqlUpdateUser, {
+		name: 'Z'
+	})
+)(CurrentUserProvider)
+// export default graphql(gqlUserPing)(CurrentUserProvider)

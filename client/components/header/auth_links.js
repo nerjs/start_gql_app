@@ -2,13 +2,13 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 
 import withCu from 'hocs/cu'
-import { ButtonLoader } from 'comp/loader'
+import { SpinLoader } from 'comp/loader'
 
 const AuthLinks = ({
 	loading,
 	isAuth
 }) => {
-	if (loading) return <ButtonLoader active />
+	if (loading) return <SpinLoader active />
 	if (isAuth) return <Link to="/auth/logout"> выход </Link>
 
 	return (

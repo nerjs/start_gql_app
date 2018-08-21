@@ -1,0 +1,21 @@
+query {
+  userPing {
+    status
+    user {
+      id
+      login
+      displayName
+      sex
+    }
+    error {
+      code
+      type
+      message
+    }
+  }
+
+  users {
+    id
+    login
+  }
+}

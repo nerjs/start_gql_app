@@ -1,0 +1,14 @@
+mutation($login: String!, $password: String!) {
+  loginUser(login: $login, password:$password) {
+    status
+    error {
+      code
+    }
+  }
+  createUser(login: $login, password:$password) {
+    status
+    error {
+      code
+    }
+  }
+}
