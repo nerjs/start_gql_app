@@ -2,25 +2,21 @@ import React from 'react'
 
 
 import { Form } from 'styled/forms'
+import {
+	GroupHelperText
+} from 'styled/forms'
 
 
-class FormContainer extends React.Component {
+const FormContainer = ({
+	onSubmit,
+	error,
+	children
+}) => (
+	<Form onSubmit={onSubmit} >
+		{!!error && <GroupHelperText error={true}>{error}</GroupHelperText>}
+		{children}
+	</Form>
+)
 
-	handleSubmit = (e) => {
-		e.preventDefault();
-		if (this.props.onSubmit) {
-			
-		}
-	}
-
-	render() {
-
-		return (
-			<Form >
-				{this.props.children}
-			</Form>
-		)
-	}
-}
 
 export default FormContainer

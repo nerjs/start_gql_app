@@ -12,7 +12,9 @@ const {
 	COOKIE_TOKEN_REFRESH_NAME,
 	JWT_TOKEN_SECRET,
 	JWT_REFRESH_TOKEN_SECRET,
-	SESSION_SECRET
+	SESSION_SECRET,
+	SERVER_HOST,
+	SERVER_PORT
 } = process.env
 
 const TOKEN_EXP = 15*60*1000
@@ -63,7 +65,6 @@ class SessAuth {
 
 	getSession() {
 		let data = {}
-
 		if (this.req.cookies[COOKIE_SESSION_NAME]) {
 			try {
 				let data = jwt.verify(this.req.cookies[COOKIE_SESSION_NAME], SESSION_SECRET)
@@ -79,7 +80,8 @@ class SessAuth {
 		if (token) {
 			this.res.cookie(COOKIE_TOKEN_NAME,token,{
 				maxAge: TOKEN_EXP,
-				httpOnly: true
+				httpOnly: true,
+				sameSite: false
 			})
 		}
 		if (refreshToken) {
@@ -93,7 +95,7 @@ class SessAuth {
 	dropTokens() {
 		this.res.cookie(COOKIE_TOKEN_NAME,'',{
 			expires: new Date(Date.now() - 1000),
-			httpOnly: true
+			httpOnly: true,
 		})
 		this.res.cookie(COOKIE_TOKEN_REFRESH_NAME,'',{
 			expires: new Date(Date.now() - 1000),

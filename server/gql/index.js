@@ -47,7 +47,10 @@ const schema = applyMiddleware(
 
 export default app => {
 
-	app.use(`/${GRAPHQL_ENDPOINT}`,cors(), graphqlExpress(({ sess }) => ({ 
+	app.use(`/${GRAPHQL_ENDPOINT}`,cors({
+  // origin: '<insert uri of front-end domain>',
+  credentials: true // <-- REQUIRED backend setting
+}), graphqlExpress(({ sess }) => ({ 
 			schema, 
 			context: {
 				db,

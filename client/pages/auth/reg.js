@@ -5,14 +5,15 @@ import * as yup from 'yup'
 import Loader from 'icons/io/load-d'
 import { schemaReg as validationSchema } from 'utils/validate'
 
-import { Form, GroupButtonSubmit } from 'styled/forms'
-import { TextInput, PasswordInput, Group, OnceButton } from 'comp/form'
+import { GroupButtonSubmit } from 'styled/forms'
+import { Form, TextInput, PasswordInput, Group, OnceButton } from 'comp/form'
 import { SimpleTitle } from 'styled/typo'
 
 const AuthReg = ({
 	handleSubmit,
 	isSubmitting,
 	errors,
+	status,
 	...props
 }) => {
 	// console.log('reg: ',props)
@@ -21,7 +22,7 @@ const AuthReg = ({
 	return (
 		<React.Fragment>
 			<SimpleTitle>Регистрация</SimpleTitle>
-			<Form onSubmit={handleSubmit} >
+			<Form onSubmit={handleSubmit} error={status} >
 				<Field 
 					type="text"
 					name="login"
@@ -65,11 +66,16 @@ export default withFormik({
 		confirmPassword: ''
 	}),
 	validationSchema,
-	handleSubmit: (props, { setFieldError, setSubmitting, ...params }) => {
-		// console.log('props: ',props)
-		// console.log('params: ',params)
+	handleSubmit: async ( params, { props: { registerUser, location, history, ...props}, setStatus, setSubmitting }) => {
 		setSubmitting(true)
-		// setFieldError('login','tratata')
-		setTimeout(()=>setSubmitting(false),3000)
+		setStatus(null)
+		try {
+			await registerUser(params)
+			send.info('Регистрация успешна!')
+			history.push(location.state && location.state.referer ? location.state.referer : '/')
+		} catch(e) {
+			setStatus(e.message)
+		}
+		setSubmitting(false)
 	}
 })(AuthReg)

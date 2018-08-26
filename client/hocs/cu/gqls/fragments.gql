@@ -1,0 +1,12 @@
+fragment Resolver on UserResolver {
+	status 
+	user {
+		id 
+		login
+	} 
+	error {
+		code 
+		type 
+		message
+	}
+}

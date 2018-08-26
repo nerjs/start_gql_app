@@ -1,14 +1,14 @@
-mutation($login: String!, $password: String!) {
+#import "./fragments.gql"
+
+
+mutation loginUser($login: String!, $password: String!) {
   loginUser(login: $login, password:$password) {
-    status
-    error {
-      code
-    }
+    ...Resolver
   }
+}
+
+mutation registerUser($login: String!, $password: String!) {
   createUser(login: $login, password:$password) {
-    status
-    error {
-      code
-    }
+    ...Resolver
   }
 }

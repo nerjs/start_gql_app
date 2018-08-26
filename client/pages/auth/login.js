@@ -5,9 +5,10 @@ import * as yup from 'yup'
 import Loader from 'icons/io/load-d'
 import { schemaLogin as validationSchema } from 'utils/validate'
 
-import { Form, GroupButtonSubmit } from 'styled/forms'
-import { TextInput, PasswordInput, Group, OnceButton } from 'comp/form'
+import { GroupButtonSubmit } from 'styled/forms'
+import { Form, TextInput, PasswordInput, Group, OnceButton } from 'comp/form'
 import { SimpleTitle } from 'styled/typo'
+import send from 'utils/send'
 
 import withCu from 'hocs/cu'
 
@@ -15,15 +16,13 @@ const AuthLogin = ({
 	handleSubmit,
 	isSubmitting,
 	errors,
+	status,
 	...props
 }) => {
-	// console.log('reg: ',props)
-	// console.log('errors: ',errors)
-
 	return (
 		<React.Fragment>
 			<SimpleTitle>Авторизация</SimpleTitle>
-			<Form onSubmit={handleSubmit} >
+			<Form onSubmit={handleSubmit} error={status}>
 				<Field 
 					type="text"
 					name="login"
@@ -58,10 +57,16 @@ export default withCu(withFormik({
 		password: ''
 	}),
 	validationSchema,
-	handleSubmit: ({ login }, { props, setFieldError, setSubmitting, ...params }) => {
-		props.createUser({login})
+	handleSubmit: async ( params, { props: { loginUser, location, history, ...props}, setStatus, setSubmitting }) => {
 		setSubmitting(true)
-		// setFieldError('login','tratata')
-		setTimeout(()=>setSubmitting(false),3000)
+		setStatus(null)
+		try {
+			await loginUser(params)
+			send.info('Авторизация успешна!')
+			history.push(location.state && location.state.referer ? location.state.referer : '/')
+		} catch(e) {
+			setStatus(e.message)
+		}
+		setSubmitting(false)
 	}
 })(AuthLogin))

@@ -10,7 +10,9 @@ import { ApolloProvider } from 'react-apollo';
 
 
 const client = new ApolloClient({
-	uri: `${process.env.SERVER_PROTOKOL}://${process.env.SERVER_HOST}:${process.env.SERVER_PORT}/${process.env.GRAPHQL_ENDPOINT}`
+	uri: `${process.env.SERVER_PROTOKOL}://${process.env.SERVER_HOST}:${process.env.SERVER_PORT}/${process.env.GRAPHQL_ENDPOINT}`,
+	credentials: 'include'
+	// credentials: 'same-origin'
 });
 
 // console.log(client)

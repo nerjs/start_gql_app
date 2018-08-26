@@ -3,31 +3,13 @@ import gql from "graphql-tag";
 import { compose, graphql } from 'react-apollo';
 
 import gqlUserPing from './gqls/user_ping.gql'
-import gqlUpdateUser from './gqls/update_user.gql'
-import { UnknownError } from 'utils/error'
+import { loginUser, registerUser } from './gqls/update_user.gql'
+import { UnknownError, ServerError } from 'utils/error'
+import send from 'utils/send'
 
-// console.log(new UnknownError('userPing'))
-const userPing = gql`{
-  userPing {
-    status
-    user {
-      id
-      login
-      displayName
-      sex
-    }
-    error {
-      code
-      type
-      message
-    }
-  }
-}
-`
-
-console.log({ userPing, gqlUserPing, gqlUpdateUser })
 
 import { Provider } from './context'
+
 
 class CurrentUserProvider extends React.Component {
 	state = {
@@ -40,21 +22,26 @@ class CurrentUserProvider extends React.Component {
 	}
 
 	componentDidMount() {
-		this.updateState()
+		const { data: { userPing, loading}} = this.props
+		this.updateState(userPing, 'userPing', loading)
 	}
 
 	componentDidUpdate(oldProps) {
 		if (this.state.loading !== this.props.data.loading) {
-			this.updateState()
+			const { data: { userPing, loading}} = this.props
+			this.updateState(userPing, 'userPing', loading)
 		}
 	}
 
-	updateState() {
-		const { data : {loading, userPing}} = this.props;
+	updateState(data, type, loading, oError) {
 		if (this.state.loading !== loading) this.setState({ loading });
 		if (!this.state.loaded && !loading) this.setState({ loaded: true });
-		if (!userPing) return;
-		const { status, user, error } = userPing;
+
+		if (oError) {
+			this.setState({ error: oError})
+		}
+		if (!data) return;
+		const { status, user, error } = data;
 		if (status && user) {
 			this.setState({
 				isAuth: true,
@@ -63,21 +50,65 @@ class CurrentUserProvider extends React.Component {
 				error: null
 			})
 		} else if (!status && error) {
-			this.setState({ isAuth: false, error })
+			this.setState({
+				isAuth : false,
+				userData : {},
+				userId: null,
+				error,
+			})
 		} else {
-
 			this.setState({
 				isAuth: false,
-				error: new UnknownError('userPing')
+				userData : {},
+				userId: null,
+				error: new UnknownError(type)
 			})
 		}
 	}
 
-	createUser = ({ login }) => {
-		this.setState({isAuth: true, login})
+	updateMoveState(data, type, loading, oErr) {
+		this.updateState(data, type, loading, oErr)
+		if (!data && oErr) throw oErr;
+		if (!data) return false;
+		const { status, user, error} = data
+		if (!status) throw error;
+		return user;
+	}
+
+	loginUser = async ({ login, password }) => {
+		if (!login || !password) throw { message: 'Пустой запрос'};
+		this.updateMoveState(null,'login',true)
+
+		try {
+			let { data : { loginUser : data }} = await this.props.loginUser({
+				variables : {login, password}
+			})
+			return this.updateMoveState(data,'login',false)
+
+		} catch(e) {
+			const sErr = new ServerError(e)
+			this.updateMoveState(null, login, false, sErr)
+		}
+	}
+
+	registerUser = async ({ login, password }) => {
+		if (!login || !password) throw { message: 'Пустой запрос'};
+		this.updateMoveState(null,'login',true)
+
+		try {
+			let { data : { loginUser : data }} = await this.props.registerUser({
+				variables : {login, password}
+			})
+			return this.updateMoveState(data,'login',false)
+
+		} catch(e) {
+			const sErr = new ServerError(e)
+			this.updateMoveState(null, login, false, sErr)
+		}
 	}
 
 	removeUser = () => {
+		if (!send.confirm('Выйти?')) return;
 		this.setState({
 			isAuth: false,
 			login: null
@@ -85,15 +116,16 @@ class CurrentUserProvider extends React.Component {
 	}
 
 	getValue() {
+		const { loginUser, registerUser, removeUser } = this
 		return {
-			createUser: this.createUser,
-			removeUser : this.removeUser,
+			loginUser,
+			registerUser,
+			removeUser,
 			...this.state
 		}
 	}
 
 	render() {
-		console.log('cu render ',this.state, this.props)
 		return (
 			<Provider value={this.getValue()}>
 				{this.props.children}
@@ -104,8 +136,14 @@ class CurrentUserProvider extends React.Component {
 
 export default compose(
 	graphql(gqlUserPing),
-	graphql(gqlUpdateUser, {
-		name: 'Z'
+	graphql(loginUser, {
+		name: 'loginUser'
+	}),
+	graphql(registerUser, {
+		name: 'registerUser'
 	})
+	// graphql(gqlUpdateUser, {
+	// 	name: 'Z'
+	// })
 )(CurrentUserProvider)
 // export default graphql(gqlUserPing)(CurrentUserProvider)
